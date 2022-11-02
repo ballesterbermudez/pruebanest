@@ -12,13 +12,18 @@ import { createPictureDto } from './dtos/createPictureDto';
 import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
 import { PictureDto } from './dtos/pictureDto';
 import { Product } from 'src/product/product.entity';
+import { ProductService } from 'src/product/product.service';
 
 @Controller('picture')
 export class PictureController {
-  constructor(private pictureService: PictureService) {}
+  constructor(
+    private pictureService: PictureService,
+    private productService: ProductService,
+  ) {}
 
   @Post()
-  createPicture(@Body() body: createPictureDto, product: Product) {
+  async createPicture(@Body() body: createPictureDto) {
+    const product = await this.productService.find(body.product);
     return this.pictureService.create(body.url, body.description, product);
   }
 
