@@ -17,7 +17,7 @@ import { APP_PIPE } from '@nestjs/core';
     PictureModule,
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'db.prueba',
+      database: 'db.prueba.sqlite',
       entities: [Picture, User, Product],
       synchronize: true,
     }),
