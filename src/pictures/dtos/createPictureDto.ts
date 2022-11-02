@@ -8,6 +8,5 @@ export class createPictureDto {
   @IsString()
   description: string;
 
-  @IsNumber()
-  product: number;
+  
 }

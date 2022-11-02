@@ -19,7 +19,7 @@ export class ProductService {
 
         if(id)
         { 
-            product = await this.repo.findOneBy({id})
+            product = await this.repo.findOne({where: {id: id}, relations: ['pictures']})
         }
         return product;
     }
@@ -50,7 +50,7 @@ export class ProductService {
 
     async addPicture(id: number, idPic: number){
         const pic = await this.picServ.findOne(idPic);
-        const prod = await this.find(id);
+        const prod = await this.find(id) as Product;
 
         if(!prod)
         {
@@ -60,8 +60,22 @@ export class ProductService {
         {
             throw new NotFoundException('Pic not found')
         }
+        
+       
 
-        prod.pictures.push(pic);
+        if(!prod.pictures)
+        {
+            prod.pictures = []
+        }
+        else if(!prod.pictures.find((value) => {return value.id === pic.id}))
+        {
+            prod.pictures.push(pic)
+        }
+    
+
+        console.log(prod);
+        await this.picServ.modify(idPic, {product: prod});
+        
 
         return this.repo.save(prod);
     }

@@ -18,13 +18,13 @@ import { ProductService } from 'src/product/product.service';
 export class PictureController {
   constructor(
     private pictureService: PictureService,
-    private productService: ProductService,
+   
   ) {}
 
   @Post()
   async createPicture(@Body() body: createPictureDto) {
-    const product = await this.productService.find(body.product);
-    return this.pictureService.create(body.url, body.description, product);
+    
+    return this.pictureService.create(body.url, body.description);
   }
 
   @UseInterceptors(new SerializeInterceptor(PictureDto))
