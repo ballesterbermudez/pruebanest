@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Product } from 'src/product/product.entity';
 import { Repository } from 'typeorm';
 import { Url } from 'url';
 import { Picture } from './picture.entity';
@@ -8,8 +9,9 @@ import { Picture } from './picture.entity';
 export class PictureService {
   constructor(@InjectRepository(Picture) private repo: Repository<Picture>) {}
 
-  create(url: string, description: string) {
-    const picture = this.repo.create({ url, description });
+  create(url: string, description: string, product: Product) {
+    const picture = this.repo.create({ url, description, product });
+    picture.product = product;
     return this.repo.save(picture);
   }
 
