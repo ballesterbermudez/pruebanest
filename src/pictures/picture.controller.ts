@@ -18,7 +18,7 @@ export class PictureController {
 
   @Post()
   createPicture(@Body() body: createPictureDto) {
-    this.pictureService.create(body.url, body.description);
+    return this.pictureService.create(body.url, body.description);
   }
 
   @UseInterceptors(new SerializeInterceptor(PictureDto))
