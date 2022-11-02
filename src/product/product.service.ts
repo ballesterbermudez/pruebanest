@@ -1,11 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PictureService } from 'src/pictures/picture.service';
 import { Repository } from 'typeorm';
 import { Product } from './product.entity';
 
 @Injectable()
 export class ProductService {
-    constructor(@InjectRepository(Product) public repo: Repository<Product>){}
+    constructor(@InjectRepository(Product) public repo: Repository<Product>,
+        private picServ: PictureService){}
 
     list(){
         return this.repo.find();
@@ -44,5 +46,23 @@ export class ProductService {
         if(!product){ throw new NotFoundException('user not found')}
 
         return this.repo.remove(product);
+    }
+
+    async addPicture(id: number, idPic: number){
+        const pic = await this.picServ.findOne(idPic);
+        const prod = await this.find(id);
+
+        if(!prod)
+        {
+            throw new NotFoundException('product not found')
+        }
+        if(!pic)
+        {
+            throw new NotFoundException('Pic not found')
+        }
+
+        prod.pictures.push(pic);
+
+        return this.repo.save(prod);
     }
 }

@@ -44,4 +44,9 @@ export class ProductController {
   delete(@Param('id') id: string) {
     return this.service.delete(parseInt(id));
   }
+
+  @Patch('/:id/picture')
+  addPicture(@Param('id') id: string, @Body() body: {idPic: number}){
+    return this.service.addPicture(parseInt(id), body.idPic);
+  }
 }
