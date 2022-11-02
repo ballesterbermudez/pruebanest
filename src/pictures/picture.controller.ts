@@ -11,14 +11,15 @@ import { PictureService } from './picture.service';
 import { createPictureDto } from './dtos/createPictureDto';
 import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
 import { PictureDto } from './dtos/pictureDto';
+import { Product } from 'src/product/product.entity';
 
 @Controller('picture')
 export class PictureController {
   constructor(private pictureService: PictureService) {}
 
   @Post()
-  createPicture(@Body() body: createPictureDto) {
-    return this.pictureService.create(body.url, body.description);
+  createPicture(@Body() body: createPictureDto, product: Product) {
+    return this.pictureService.create(body.url, body.description, product);
   }
 
   @UseInterceptors(new SerializeInterceptor(PictureDto))

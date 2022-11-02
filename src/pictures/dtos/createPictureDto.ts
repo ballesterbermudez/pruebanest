@@ -1,4 +1,4 @@
-import { IsString, IsUrl } from 'class-validator';
+import { IsNumber, isNumber, IsString, IsUrl } from 'class-validator';
 import { Url } from 'url';
 
 export class createPictureDto {
@@ -7,4 +7,7 @@ export class createPictureDto {
 
   @IsString()
   description: string;
+
+  @IsNumber()
+  product: number;
 }

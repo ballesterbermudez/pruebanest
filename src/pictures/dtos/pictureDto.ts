@@ -1,4 +1,5 @@
 import { Expose } from 'class-transformer';
+import { Product } from 'src/product/product.entity';
 import { Url } from 'url';
 
 export class PictureDto {
@@ -7,4 +8,7 @@ export class PictureDto {
 
   @Expose()
   description: string;
+
+  @Expose()
+  product: Product;
 }
