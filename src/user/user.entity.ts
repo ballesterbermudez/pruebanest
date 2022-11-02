@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Product } from '../product/product.entity';
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
@@ -13,4 +13,8 @@ export class User {
 
     @Column()
     password: string;
+
+    @ManyToMany(() => Product)
+    @JoinTable()
+    products: Product[]
 }

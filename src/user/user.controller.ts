@@ -1,4 +1,4 @@
-import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Patch, Post } from '@nestjs/common';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { CreateUserDto } from './dtos/create-user';
 import { UserDto } from './dtos/user.dto';
@@ -28,6 +28,13 @@ export class UserController {
             throw new NotFoundException('user not found!')
         }
         return user;
+    }
+
+    @Patch('/:id')
+    async addProductToUser(@Param('id') id: string, @Body() body: {pordId: number}){
+        return this.userService.addProduct(parseInt(id), body.pordId);
+
+
     }
 
 }
